@@ -1,6 +1,6 @@
 {
-    "name": "op_cardpro_app",
-    "short_name": "op_cardpro_app",
+    "name": "op_cardpro",
+    "short_name": "op_cardpro",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,4 +1,4 @@
-package com.opcardpro.op_cardpro_app
+package com.opcardpro.op_cardpro
 
 import io.flutter.embedding.android.FlutterActivity
 
