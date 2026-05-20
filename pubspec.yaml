@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   cached_network_image: ^3.4.1
   flutter_cache_manager: ^3.4.1
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +78,42 @@ flutter:
     - assets/data/OP-13/cards.json
     - assets/data/OP-14/cards.json
     - assets/data/OP-15/cards.json
+    - assets/data/EB-01/cards.json
+    - assets/data/EB-02/cards.json
+    - assets/data/EB-03/cards.json
+    - assets/data/EB-04/cards.json
+    - assets/data/PRB-01/cards.json
+    - assets/data/PRB-02/cards.json
+    - assets/data/ST-01/cards.json
+    - assets/data/ST-02/cards.json
+    - assets/data/ST-03/cards.json
+    - assets/data/ST-04/cards.json
+    - assets/data/ST-05/cards.json
+    - assets/data/ST-06/cards.json
+    - assets/data/ST-07/cards.json
+    - assets/data/ST-08/cards.json
+    - assets/data/ST-09/cards.json
+    - assets/data/ST-10/cards.json
+    - assets/data/ST-11/cards.json
+    - assets/data/ST-12/cards.json
+    - assets/data/ST-13/cards.json
+    - assets/data/ST-14/cards.json
+    - assets/data/ST-15/cards.json
+    - assets/data/ST-16/cards.json
+    - assets/data/ST-17/cards.json
+    - assets/data/ST-18/cards.json
+    - assets/data/ST-19/cards.json
+    - assets/data/ST-20/cards.json
+    - assets/data/ST-21/cards.json
+    - assets/data/ST-22/cards.json
+    - assets/data/ST-23/cards.json
+    - assets/data/ST-24/cards.json
+    - assets/data/ST-25/cards.json
+    - assets/data/ST-26/cards.json
+    - assets/data/ST-27/cards.json
+    - assets/data/ST-28/cards.json
+    - assets/data/ST-29/cards.json
+    - assets/data/ST-30/cards.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

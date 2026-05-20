@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/set_model.dart';
 import '../models/card_model.dart';
+import '../models/deck_model.dart';
 
 class DataService {
   static final DataService _instance = DataService._internal();
@@ -12,6 +14,10 @@ class DataService {
   List<SetModel> _sets = [];
   // Cached cards by set code
   final Map<String, List<CardModel>> _cardsBySet = {};
+  // Cached list of ALL cards across all sets
+  List<CardModel> _allCards = [];
+  // Map of card ID to CardModel for fast lookups
+  final Map<String, CardModel> _allCardsMap = {};
 
   // Fetch all sets from assets
   Future<List<SetModel>> getSets() async {
@@ -55,11 +61,46 @@ class DataService {
 
       // Cache the result
       _cardsBySet[cleanSetCode] = loadedCards;
+      
+      // Update the mapping
+      for (final card in loadedCards) {
+        _allCardsMap[card.cardId] = card;
+      }
+
       return loadedCards;
     } catch (e) {
       print('Error loading cards for set $cleanSetCode: $e');
       return [];
     }
+  }
+
+  // Fetch and cache all cards across all sets in the database
+  Future<List<CardModel>> getAllCards() async {
+    if (_allCards.isNotEmpty) return _allCards;
+
+    try {
+      final sets = await getSets();
+      final List<CardModel> mergedCards = [];
+
+      for (final set in sets) {
+        final cards = await getCards(set.setCode);
+        mergedCards.addAll(cards);
+      }
+
+      _allCards = mergedCards;
+      return _allCards;
+    } catch (e) {
+      print('Error loading all cards: $e');
+      return [];
+    }
+  }
+
+  // Fetch all Leader cards in the database
+  Future<List<CardModel>> getAllLeaders() async {
+    final allCards = await getAllCards();
+    return allCards
+        .where((card) => card.cardType.toLowerCase() == 'leader')
+        .toList();
   }
 
   // Search and filter cards across loaded sets or in a specific set
@@ -111,5 +152,39 @@ class DataService {
 
       return true;
     }).toList();
+  }
+
+  // Save Decks list to SharedPreferences
+  Future<void> saveDecks(List<DeckModel> decks) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final jsonList = decks.map((deck) => deck.toJson()).toList();
+      final jsonString = json.encode(jsonList);
+      await prefs.setString('op_cardpro_decks', jsonString);
+    } catch (e) {
+      print('Error saving decks: $e');
+    }
+  }
+
+  // Load Decks list from SharedPreferences
+  Future<List<DeckModel>> loadDecks() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final jsonString = prefs.getString('op_cardpro_decks');
+      if (jsonString == null || jsonString.isEmpty) {
+        return [];
+      }
+
+      // Ensure all cards are loaded so we can resolve the Leader CardModels correctly
+      await getAllCards();
+
+      final List<dynamic> jsonList = json.decode(jsonString);
+      return jsonList
+          .map((item) => DeckModel.fromJson(item as Map<String, dynamic>, _allCardsMap))
+          .toList();
+    } catch (e) {
+      print('Error loading decks: $e');
+      return [];
+    }
   }
 }
