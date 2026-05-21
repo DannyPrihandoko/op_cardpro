@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/cupertino.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../models/card_model.dart';
@@ -314,6 +315,7 @@ class _DeckBuilderScreenState extends State<DeckBuilderScreen> {
                                           Positioned.fill(
                                             child: CachedNetworkImage(
                                               imageUrl: leader.cardImageUrl,
+                                              httpHeaders: kIsWeb ? null : const {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'},
                                               fit: BoxFit.cover,
                                               placeholder: (c, u) => Container(
                                                 color: Colors.black26,

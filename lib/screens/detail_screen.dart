@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:cached_network_image/cached_network_image.dart';
 import '../models/card_model.dart';
 
@@ -66,6 +67,7 @@ class DetailScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(14),
                           child: CachedNetworkImage(
                             imageUrl: card.cardImageUrl,
+                            httpHeaders: kIsWeb ? null : const {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'},
                             fit: BoxFit.cover,
                             placeholder: (context, url) => Container(
                               decoration: BoxDecoration(gradient: gradient),
@@ -505,6 +507,7 @@ class DetailScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 child: CachedNetworkImage(
                   imageUrl: card.cardImageUrl,
+                  httpHeaders: kIsWeb ? null : const {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'},
                   fit: BoxFit.contain,
                   placeholder: (context, url) => const CircularProgressIndicator(),
                   errorWidget: (context, url, error) => const Icon(

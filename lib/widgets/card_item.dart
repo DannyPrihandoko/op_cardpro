@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:cached_network_image/cached_network_image.dart';
 import '../models/card_model.dart';
 import '../screens/detail_screen.dart';
@@ -79,6 +80,7 @@ class _CardItemState extends State<CardItem> with SingleTickerProviderStateMixin
                   tag: 'card_img_${widget.card.cardId}',
                   child: CachedNetworkImage(
                     imageUrl: widget.card.cardImageUrl,
+                    httpHeaders: kIsWeb ? null : const {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'},
                     fit: BoxFit.cover,
                     placeholder: (context, url) => Container(
                       decoration: BoxDecoration(
@@ -156,6 +158,7 @@ class _CardItemState extends State<CardItem> with SingleTickerProviderStateMixin
                         tag: 'card_img_${widget.card.cardId}',
                         child: CachedNetworkImage(
                           imageUrl: widget.card.cardImageUrl,
+                          httpHeaders: kIsWeb ? null : const {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'},
                           fit: BoxFit.cover,
                           placeholder: (context, url) => Container(
                             decoration: BoxDecoration(

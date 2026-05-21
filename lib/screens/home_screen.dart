@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:cached_network_image/cached_network_image.dart';
 import '../models/set_model.dart';
 import '../services/data_service.dart';
@@ -313,6 +314,7 @@ class _SetListItemState extends State<_SetListItem> with SingleTickerProviderSta
                         angle: 0.15,
                         child: CachedNetworkImage(
                           imageUrl: widget.set.images.boxImage,
+                          httpHeaders: kIsWeb ? null : const {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'},
                           fit: BoxFit.contain,
                           errorWidget: (context, url, error) => const SizedBox(),
                         ),

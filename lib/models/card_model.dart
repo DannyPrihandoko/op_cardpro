@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class CardModel {
   final String cardId;
@@ -38,6 +39,12 @@ class CardModel {
   });
 
   factory CardModel.fromJson(Map<String, dynamic> json) {
+    String rawUrl = json['card_image_url'] ?? '';
+    // Fix CORS issue when running on Flutter Web (Chrome/Edge)
+    if (kIsWeb && rawUrl.isNotEmpty && rawUrl.startsWith('http')) {
+      rawUrl = 'https://api.allorigins.win/raw?url=${Uri.encodeComponent(rawUrl)}';
+    }
+
     return CardModel(
       cardId: json['card_id'] ?? '',
       name: json['name'] ?? '',
@@ -54,7 +61,7 @@ class CardModel {
       effect: json['effect'],
       trigger: json['trigger'],
       cardSet: json['card_set'],
-      cardImageUrl: json['card_image_url'] ?? '',
+      cardImageUrl: rawUrl,
     );
   }
 

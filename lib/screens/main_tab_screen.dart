@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'home_screen.dart';
 import 'deck_builder_screen.dart';
+import 'profile_screen.dart';
 
 class MainTabScreen extends StatelessWidget {
   const MainTabScreen({Key? key}) : super(key: key);
@@ -31,6 +32,11 @@ class MainTabScreen extends StatelessWidget {
             activeIcon: Icon(CupertinoIcons.hammer_fill),
             label: 'Deck Builder',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.person),
+            activeIcon: Icon(CupertinoIcons.person_fill),
+            label: 'Profile',
+          ),
         ],
       ),
       tabBuilder: (context, index) {
@@ -48,6 +54,14 @@ class MainTabScreen extends StatelessWidget {
               builder: (context) {
                 return const CupertinoPageScaffold(
                   child: DeckBuilderScreen(),
+                );
+              },
+            );
+          case 2:
+            return CupertinoTabView(
+              builder: (context) {
+                return const CupertinoPageScaffold(
+                  child: ProfileScreen(),
                 );
               },
             );
