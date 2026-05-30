@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/set_model.dart';
 import '../models/card_model.dart';
 import '../models/deck_model.dart';
+import '../models/tournament_model.dart';
 
 class DataService {
   static final DataService _instance = DataService._internal();
@@ -186,5 +187,48 @@ class DataService {
       print('Error loading decks: $e');
       return [];
     }
+  }
+
+  // ── Tournament persistence ───────────────────────────────────────────────────
+
+  Future<void> saveTournaments(List<TournamentModel> tournaments) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final jsonList = tournaments.map((t) => t.toJson()).toList();
+      await prefs.setString('op_cardpro_tournaments', json.encode(jsonList));
+    } catch (e) {
+      print('Error saving tournaments: $e');
+    }
+  }
+
+  Future<List<TournamentModel>> loadTournaments() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final raw = prefs.getString('op_cardpro_tournaments');
+      if (raw == null || raw.isEmpty) return [];
+      final list = json.decode(raw) as List<dynamic>;
+      return list
+          .map((item) =>
+              TournamentModel.fromJson(item as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      print('Error loading tournaments: $e');
+      return [];
+    }
+  }
+
+  // Track which tournaments this device created (owner/admin)
+  Future<Set<String>> getOwnedTournamentIds() async {
+    final prefs = await SharedPreferences.getInstance();
+    final list = prefs.getStringList('op_cardpro_owned_tournaments') ?? [];
+    return Set<String>.from(list);
+  }
+
+  Future<void> addOwnedTournamentId(String id) async {
+    final prefs = await SharedPreferences.getInstance();
+    final owned = await getOwnedTournamentIds();
+    owned.add(id);
+    await prefs.setStringList(
+        'op_cardpro_owned_tournaments', owned.toList());
   }
 }

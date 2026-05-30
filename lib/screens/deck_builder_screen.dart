@@ -6,6 +6,7 @@ import '../models/card_model.dart';
 import '../models/deck_model.dart';
 import '../services/data_service.dart';
 import 'deck_editor_screen.dart';
+import 'tournament/deck_qr_screen.dart';
 
 class DeckBuilderScreen extends StatefulWidget {
   const DeckBuilderScreen({Key? key}) : super(key: key);
@@ -881,6 +882,24 @@ class _DeckListItem extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(width: 12),
+                    // Tournament QR button
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => DeckQrScreen(deck: deck),
+                        ));
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF3B82F6).withOpacity(0.1),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(CupertinoIcons.qrcode,
+                            color: Color(0xFF3B82F6), size: 18),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
                     GestureDetector(
                       onTap: onDelete,
                       child: Container(

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'home_screen.dart';
 import 'deck_builder_screen.dart';
 import 'profile_screen.dart';
+import 'tournament/tournament_list_screen.dart';
 
 class MainTabScreen extends StatelessWidget {
   const MainTabScreen({Key? key}) : super(key: key);
@@ -10,11 +11,11 @@ class MainTabScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
-      backgroundColor: const Color(0xFF0A0F1E), // Matches AppTheme obsidianBg
+      backgroundColor: const Color(0xFF0A0F1E),
       tabBar: CupertinoTabBar(
-        backgroundColor: const Color(0xFF0F172A), // Matches AppTheme surfaceBg
-        activeColor: const Color(0xFFFFD700), // Matches AppTheme accentGold
-        inactiveColor: const Color(0xFF94A3B8), // Matches AppTheme textSecondary
+        backgroundColor: const Color(0xFF0F172A),
+        activeColor: const Color(0xFFFFD700),
+        inactiveColor: const Color(0xFF94A3B8),
         border: Border(
           top: BorderSide(
             color: Colors.white.withOpacity(0.06),
@@ -33,6 +34,11 @@ class MainTabScreen extends StatelessWidget {
             label: 'Deck Builder',
           ),
           BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.flag),
+            activeIcon: Icon(CupertinoIcons.flag_fill),
+            label: 'Tournament',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.person),
             activeIcon: Icon(CupertinoIcons.person_fill),
             label: 'Profile',
@@ -43,35 +49,31 @@ class MainTabScreen extends StatelessWidget {
         switch (index) {
           case 0:
             return CupertinoTabView(
-              builder: (context) {
-                return const CupertinoPageScaffold(
-                  child: HomeScreen(),
-                );
-              },
+              builder: (context) => const CupertinoPageScaffold(
+                child: HomeScreen(),
+              ),
             );
           case 1:
             return CupertinoTabView(
-              builder: (context) {
-                return const CupertinoPageScaffold(
-                  child: DeckBuilderScreen(),
-                );
-              },
+              builder: (context) => const CupertinoPageScaffold(
+                child: DeckBuilderScreen(),
+              ),
             );
           case 2:
             return CupertinoTabView(
-              builder: (context) {
-                return const CupertinoPageScaffold(
-                  child: ProfileScreen(),
-                );
-              },
+              builder: (context) => const TournamentListScreen(),
+            );
+          case 3:
+            return CupertinoTabView(
+              builder: (context) => const CupertinoPageScaffold(
+                child: ProfileScreen(),
+              ),
             );
           default:
             return CupertinoTabView(
-              builder: (context) {
-                return const CupertinoPageScaffold(
-                  child: HomeScreen(),
-                );
-              },
+              builder: (context) => const CupertinoPageScaffold(
+                child: HomeScreen(),
+              ),
             );
         }
       },
