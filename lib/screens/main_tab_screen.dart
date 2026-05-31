@@ -4,6 +4,7 @@ import 'home_screen.dart';
 import 'deck_builder_screen.dart';
 import 'profile_screen.dart';
 import 'tournament/tournament_list_screen.dart';
+import 'testing/testing_lab_screen.dart';
 
 class MainTabScreen extends StatelessWidget {
   const MainTabScreen({Key? key}) : super(key: key);
@@ -39,6 +40,11 @@ class MainTabScreen extends StatelessWidget {
             label: 'Tournament',
           ),
           BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.gamecontroller),
+            activeIcon: Icon(CupertinoIcons.gamecontroller_fill),
+            label: 'Test Lab',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.person),
             activeIcon: Icon(CupertinoIcons.person_fill),
             label: 'Profile',
@@ -64,6 +70,12 @@ class MainTabScreen extends StatelessWidget {
               builder: (context) => const TournamentListScreen(),
             );
           case 3:
+            return CupertinoTabView(
+              builder: (context) => const CupertinoPageScaffold(
+                child: TestingLabScreen(),
+              ),
+            );
+          case 4:
             return CupertinoTabView(
               builder: (context) => const CupertinoPageScaffold(
                 child: ProfileScreen(),

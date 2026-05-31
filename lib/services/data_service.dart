@@ -20,6 +20,9 @@ class DataService {
   // Map of card ID to CardModel for fast lookups
   final Map<String, CardModel> _allCardsMap = {};
 
+  // Public getter for external access (e.g., preset deck resolution)
+  Map<String, CardModel> get allCardsMap => Map.unmodifiable(_allCardsMap);
+
   // Fetch all sets from assets
   Future<List<SetModel>> getSets() async {
     if (_sets.isNotEmpty) return _sets;
